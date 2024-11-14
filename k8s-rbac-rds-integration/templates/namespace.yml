@@ -1,0 +1,9 @@
+{{ range $namespace := list "staging" "production" }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ $namespace }}
+  annotations:
+    "helm.sh/hook": pre-install
+---
+{{ end }}

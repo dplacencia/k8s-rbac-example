@@ -1,0 +1,4 @@
+rdsUsernameStaging: example_user
+rdsPasswordStaging: example_password
+rdsUsernameProd: example_user
+rdsPasswordProd: example_password

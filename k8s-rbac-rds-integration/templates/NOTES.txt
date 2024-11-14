@@ -1,0 +1,76 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+This Helm chart has configured the following:
+- Namespaces: staging and production
+- RBAC Roles and RoleBindings for developer and admin in both namespaces
+- Secrets for RDS credentials specific to each environment
+
+Verification and Testing
+========================
+
+To ensure the deployment is working as expected, follow these steps:
+
+1. Check Namespace Creation
+---------------------------
+Verify that the namespaces have been created:
+
+    kubectl get namespaces
+
+You should see both staging and production listed.
+
+2. Verify RBAC Role and RoleBinding Configuration
+-------------------------------------------------
+Check that the RBAC roles and bindings are applied in each namespace:
+
+    kubectl get roles -n staging
+    kubectl get rolebindings -n staging
+    kubectl get roles -n production
+    kubectl get rolebindings -n production
+
+This should show roles and bindings for both developer and admin.
+
+3. Verify RDS Credentials (Secrets)
+-----------------------------------
+Ensure that secrets for RDS credentials are stored in each namespace:
+
+    kubectl get secrets -n staging
+    kubectl get secrets -n production
+
+You should see staging-rds-credentials in staging and production-rds-credentials in production.
+
+4. Run End-to-End Tests
+-----------------------
+An external test script (test_config.sh) has been provided to perform end-to-end testing of the RBAC and secrets configuration.
+This script will check if the correct permissions are enforced for each role and namespace.
+
+To run the test:
+  1. Ensure kubectl is configured and you have access to the cluster.
+  2. Execute the script:
+
+    ./test_config.sh
+
+The test script will validate:
+  - developer has full access to staging but no access to production.
+  - admin has full access to both staging and production.
+
+Expected Test Output
+--------------------
+The test_config.sh script should provide output indicating:
+  - Success if permissions and secrets are correctly configured.
+  - Error messages if any permissions are misconfigured or access is incorrectly granted/denied.
+
+Troubleshooting
+---------------
+If the tests fail:
+  - Ensure the Helm chart was deployed successfully.
+  - Check Kubernetes logs for any unexpected issues.
+  - Verify that Kubernetes contexts and permissions are set up correctly.
+
+Additional Notes
+----------------
+- Production Best Practices: Remember to rotate secrets periodically and avoid hardcoding sensitive values in the values file.
+- RBAC Security: Follow the principle of least privilege when customizing roles and bindings.
+
+Thank you for using the chart! Reach out if you encounter any issues or need further customization.
