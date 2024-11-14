@@ -88,3 +88,6 @@ If you encounter issues with the deployment:
 - Confirm that the Helm chart installed successfully and that all resources are created as expected.
 - Check the `kubectl logs` for any errors related to access permissions.
 - Verify that the Kubernetes contexts and permissions are correctly configured on your cluster.
+
+## Why Helm?
+Helm was chosen to streamline deployment, manage configurations across environments, and securely handle sensitive data like AWS RDS credentials. It enables easy parameterization for staging and production, ensures consistency, and supports scalability with minimal effort.
